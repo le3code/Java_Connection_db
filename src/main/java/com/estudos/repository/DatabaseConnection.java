@@ -24,7 +24,7 @@ public class DatabaseConnection {
 
     private void createConnectio() throws SQLException {
         this.connection = DriverManager
-                .getConnection("jdbc:mysql://localhost:3306/teste", "root", "123456789");
+                .getConnection("jdbc:mysql://localhost:3306/ultima_db", "root", "#motifxf7");
                 this.connection.setAutoCommit(true);
     }
 
