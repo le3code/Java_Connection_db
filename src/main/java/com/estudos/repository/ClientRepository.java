@@ -36,8 +36,25 @@ public class ClientRepository {
         }
         return clients;
     }
+    public Client findById(int id) throws SQLException {
+        Client client = null;
+        PreparedStatement preparedStatement = this.connection
+                .getConnection().prepareStatement("SELECT * FROM client WHERE id =?");
+        preparedStatement.setInt(1,id);
+        ResultSet resultSet = preparedStatement.executeQuery();
 
+        if( resultSet.next()) {
 
+            client = new Client();
 
+            client.setId(resultSet.getInt("id"));
+            client.setFirstName(resultSet.getString("firstName"));
+            client.setLastName(resultSet.getString("lastName"));
+            client.setCpf(resultSet.getString("cpf"));
+            client.setEmail(resultSet.getString("email"));
+            client.setAge(resultSet.getInt("age"));
+        }
 
+        return client;
+    }
 }
