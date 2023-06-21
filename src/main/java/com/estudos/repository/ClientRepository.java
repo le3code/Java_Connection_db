@@ -12,6 +12,7 @@ public class ClientRepository {
     private DatabaseConnection connection;
 
     public ClientRepository() {
+
         this.connection = DatabaseConnection.getInstance();
     }
 
@@ -43,7 +44,7 @@ public class ClientRepository {
         preparedStatement.setInt(1,id);
         ResultSet resultSet = preparedStatement.executeQuery();
 
-        if( resultSet.next()) {
+        if( resultSet.next() ) {
 
             client = new Client();
 
@@ -110,6 +111,21 @@ public class ClientRepository {
         return updated;
     }
 
+
+    // metodo de delete
+    public boolean delete(int id) throws SQLException {
+        boolean isDelete = false;
+
+        PreparedStatement preparedStatement = this.connection
+                .getConnection()
+                .prepareStatement("DELETE  FROM client WHERE id = ?");
+
+        preparedStatement.setInt(1, id);
+        isDelete = preparedStatement.execute();
+
+        return isDelete;
+
+    }
 
 
 
