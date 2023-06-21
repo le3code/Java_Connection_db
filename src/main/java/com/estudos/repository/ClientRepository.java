@@ -57,4 +57,60 @@ public class ClientRepository {
 
         return client;
     }
+
+    public Boolean insert(Client client) throws SQLException {
+        boolean insertd =  false;
+
+        String insertSQL = "INSERT INTO client (firstName, lastName, cpf, email, age)"+
+                "values(?,?,?,?,?)";
+
+        PreparedStatement preparedStatement = this.connection
+                .getConnection()
+                .prepareStatement(insertSQL);
+
+        preparedStatement.setString(1, client.getFirstName());
+        preparedStatement.setString(2, client.getLastName());
+        preparedStatement.setString(3, client.getCpf());
+        preparedStatement.setString(4, client.getEmail());
+        preparedStatement.setInt(5, client.getAge());
+
+
+        insertd = preparedStatement.execute();
+
+        return insertd;
+    }
+
+    public Boolean update(Client client) throws SQLException {
+        boolean updated = false;
+
+        if ( client == null || client.getId() <= 0  ) {
+            return false;
+        }
+        String updateSQL = "UPDATE client "+
+                "SET firstName = ?, "+
+                "lastName = ?,"+
+                "cpf = ?,"+
+                "email =?,"+
+                "age = ? "+
+                "WHERE id = ?";
+
+        PreparedStatement preparedStatement =  this.connection
+                .getConnection()
+                .prepareStatement(updateSQL);
+
+        preparedStatement.setString(1,client.getFirstName());
+        preparedStatement.setString(2,client.getLastName());
+        preparedStatement.setString(3,client.getCpf());
+        preparedStatement.setString(4,client.getEmail());
+        preparedStatement.setInt(5,client.getAge());
+        preparedStatement.setInt(6,client.getId());
+
+        updated = preparedStatement.execute();
+
+        return updated;
+    }
+
+
+
+
 }
